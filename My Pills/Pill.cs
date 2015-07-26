@@ -1,6 +1,6 @@
 ﻿namespace My_Pills
 {
-    class Pill
+    public class Pill
     {
         public Pill(string name, string info)
         {

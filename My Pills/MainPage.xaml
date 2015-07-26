@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
-        <Pivot Title="Мои таблетки">
-            <PivotItem Header="Утро">
+        <Pivot x:Name="AppPivot" Title="Мои таблетки">
+            <!--<PivotItem Header="Утро">
                 <Grid>
                     <ListView x:Name="morningListView" ItemsSource="{Binding}">
                         <ListView.ItemTemplate>
@@ -48,7 +48,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
-            </PivotItem>
+            </PivotItem>-->
         </Pivot>
     </Grid>
 </Page>

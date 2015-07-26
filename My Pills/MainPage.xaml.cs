@@ -32,35 +32,23 @@ namespace My_Pills
             string text = await FileIO.ReadTextAsync(file);
 
             XElement xe = XElement.Parse(text, LoadOptions.None);
-            /*List<string> morning = xe.Descendants("time")
-                                    .Where(x => x.Attribute("name").Value == "morning")
-                                    .Descendants("item")
-                                    .Select(s => s.Value)
-                                    .ToList();
-            this.morningListView.ItemsSource = morning;*/
-            List<Pill> morning = xe.Descendants("time")
-                                    .Where(x => x.Attribute("name").Value == "morning")
+            IEnumerable<string> periods = xe.Descendants("time").Select(x => x.Attribute("name").Value);
+            foreach (string period in periods)
+            {
+                PivotItem pivotItem = new PivotItem() { Header = period };
+                PillsListView pillListView = new PillsListView(
+                    xe.Descendants("time")
+                                    .Where(x => x.Attribute("name").Value == period)
                                     .Descendants("item")
                                     .Select(s => new Pill(
                                         name: s.Element("name").Value,
                                         info: s.Element("info") != null ? s.Element("info").Value : "")
                                         )
-                                    .ToList();
-            this.morningListView.ItemsSource = morning;
-
-            List<string> afternoon = xe.Descendants("time")
-                                    .Where(x => x.Attribute("name").Value == "afternoon")
-                                    .Descendants("item")
-                                    .Select(s => s.Value)
-                                    .ToList();
-            this.afternoonListView.ItemsSource = afternoon;
-
-            List<string> evening = xe.Descendants("time")
-                                    .Where(x => x.Attribute("name").Value == "evening")
-                                    .Descendants("item")
-                                    .Select(s => s.Value)
-                                    .ToList();
-            this.eveningListView.ItemsSource = evening;
+                                    .ToList()
+                    );
+                pivotItem.Content = pillListView;
+                this.AppPivot.Items.Add(pivotItem);
+            }
         }
     }
 }
