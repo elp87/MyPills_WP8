@@ -15,7 +15,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding}"></TextBlock>
+                                    <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding Name}" ></TextBlock>
+                                    <TextBlock FontFamily="Global User Interface" FontSize="22" Height="Auto" Text="{Binding Info}" Margin="25,0,0,0" ></TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

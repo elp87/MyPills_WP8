@@ -32,10 +32,19 @@ namespace My_Pills
             string text = await FileIO.ReadTextAsync(file);
 
             XElement xe = XElement.Parse(text, LoadOptions.None);
-            List<string> morning = xe.Descendants("time")
+            /*List<string> morning = xe.Descendants("time")
                                     .Where(x => x.Attribute("name").Value == "morning")
                                     .Descendants("item")
                                     .Select(s => s.Value)
+                                    .ToList();
+            this.morningListView.ItemsSource = morning;*/
+            List<Pill> morning = xe.Descendants("time")
+                                    .Where(x => x.Attribute("name").Value == "morning")
+                                    .Descendants("item")
+                                    .Select(s => new Pill(
+                                        name: s.Element("name").Value,
+                                        info: s.Element("info") != null ? s.Element("info").Value : "")
+                                        )
                                     .ToList();
             this.morningListView.ItemsSource = morning;
 
