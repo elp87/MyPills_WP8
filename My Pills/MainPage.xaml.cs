@@ -14,11 +14,12 @@ namespace My_Pills
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.NavigationCacheMode = NavigationCacheMode.Required;
-        }
-                
+            NavigationCacheMode = NavigationCacheMode.Required;
+            PreventLock();
+        }        
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             // TODO: If your application contains multiple pages, ensure that you are
@@ -47,8 +48,14 @@ namespace My_Pills
                                     .ToList()
                     );
                 pivotItem.Content = pillListView;
-                this.AppPivot.Items.Add(pivotItem);
+                AppPivot.Items.Add(pivotItem);
             }
+        }
+
+        private static void PreventLock()
+        {
+            Windows.System.Display.DisplayRequest KeepScreenOnRequest = new Windows.System.Display.DisplayRequest();
+            KeepScreenOnRequest.RequestActive();
         }
     }
 }
