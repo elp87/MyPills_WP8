@@ -12,6 +12,8 @@ namespace My_Pills
 {
     public sealed partial class MainPage : Page
     {
+        private Windows.System.Display.DisplayRequest _keepScreenOnRequest = null;
+
         public MainPage()
         {
             InitializeComponent();
@@ -52,10 +54,10 @@ namespace My_Pills
             }
         }
 
-        private static void PreventLock()
+        private void PreventLock()
         {
-            Windows.System.Display.DisplayRequest KeepScreenOnRequest = new Windows.System.Display.DisplayRequest();
-            KeepScreenOnRequest.RequestActive();
+            _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
+            _keepScreenOnRequest.RequestActive();
         }
     }
 }
