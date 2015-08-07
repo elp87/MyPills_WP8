@@ -56,7 +56,9 @@ namespace My_Pills
         {
             string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();
             List<Classes.Pill> periodPills = Classes.DataHelper.GetPillsFromXML(_pillsXML, periodName);
-            this.Frame.Navigate(typeof(EditPeriodPage), periodName);
+            this.Frame.Navigate(typeof(EditPeriodPage), 
+                                new Classes.EditPeriodPage_NavigationParameter() { periodName = periodName, pills = periodPills }
+                                );
         }
     }
 }

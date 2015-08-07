@@ -1,4 +1,5 @@
 ﻿using My_Pills.Common;
+using My_Pills.Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +69,12 @@ namespace My_Pills
         /// сеанса.  Это состояние будет равно NULL при первом посещении страницы.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.PageTitleTextBox.Text = e.NavigationParameter as string;
+            EditPeriodPage_NavigationParameter param = e.NavigationParameter as EditPeriodPage_NavigationParameter;
+            if (param != null)
+            {
+                PageTitleTextBox.Text = param.periodName;
+                PillsListView.ItemsSource = param.pills;
+            }
         }
 
         /// <summary>
