@@ -59,5 +59,11 @@ namespace My_Pills
             _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             _keepScreenOnRequest.RequestActive();
         }
+
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();             
+            
+        }
     }
 }

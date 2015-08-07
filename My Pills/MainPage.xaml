@@ -7,48 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid>
-        <Pivot x:Name="AppPivot" Title="Мои таблетки">
-            <!--<PivotItem Header="Утро">
-                <Grid>
-                    <ListView x:Name="morningListView" ItemsSource="{Binding}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding Name}" ></TextBlock>
-                                    <TextBlock FontFamily="Global User Interface" FontSize="22" Height="Auto" Text="{Binding Info}" Margin="25,0,0,0" ></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="День">
-                <Grid>
-                    <ListView x:Name="afternoonListView" ItemsSource="{Binding}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding}"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="Вечер">
-                <Grid>
-                    <ListView x:Name="eveningListView" ItemsSource="{Binding}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding}"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </PivotItem>-->
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Edit" Label="Править" Click="AppBarButton_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Grid>        
+        <Pivot x:Name="AppPivot" Title="Мои таблетки">            
         </Pivot>
     </Grid>
 </Page>
