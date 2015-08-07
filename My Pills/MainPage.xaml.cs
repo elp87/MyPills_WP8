@@ -13,6 +13,7 @@ namespace My_Pills
     public sealed partial class MainPage : Page
     {
         private Windows.System.Display.DisplayRequest _keepScreenOnRequest = null;
+        private XElement _pillsXML = null;
 
         public MainPage()
         {
@@ -34,21 +35,12 @@ namespace My_Pills
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string text = await FileIO.ReadTextAsync(file);
 
-            XElement xe = XElement.Parse(text, LoadOptions.None);
-            IEnumerable<string> periods = xe.Descendants("time").Select(x => x.Attribute("name").Value);
+            _pillsXML = XElement.Parse(text, LoadOptions.None);
+            IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
-                PillsListView pillListView = new PillsListView(
-                    xe.Descendants("time")
-                                    .Where(x => x.Attribute("name").Value == period)
-                                    .Descendants("item")
-                                    .Select(s => new Pill(
-                                        name: s.Element("name").Value,
-                                        info: s.Element("info") != null ? s.Element("info").Value : "")
-                                        )
-                                    .ToList()
-                    );
+                PillsListView pillListView = new PillsListView(Data.DataHelper.GetPillsFromXML(_pillsXML, period));
                 pivotItem.Content = pillListView;
                 AppPivot.Items.Add(pivotItem);
             }
@@ -62,8 +54,9 @@ namespace My_Pills
 
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();             
-            
+            string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();
+            List<Pill> periodPills = Data.DataHelper.GetPillsFromXML(_pillsXML, periodName);
+            this.Frame.Navigate(typeof(EditPeriodPage), periodName);
         }
     }
 }
