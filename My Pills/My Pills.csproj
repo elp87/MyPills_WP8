@@ -86,14 +86,14 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="Data\DataHelper.cs" />
+    <Compile Include="Classes\DataHelper.cs" />
     <Compile Include="EditPeriodPage.xaml.cs">
       <DependentUpon>EditPeriodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Pill.cs" />
+    <Compile Include="Classes\Pill.cs" />
     <Compile Include="PillsListView.xaml.cs">
       <DependentUpon>PillsListView.xaml</DependentUpon>
     </Compile>

@@ -40,7 +40,7 @@ namespace My_Pills
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
-                PillsListView pillListView = new PillsListView(Data.DataHelper.GetPillsFromXML(_pillsXML, period));
+                PillsListView pillListView = new PillsListView(Classes.DataHelper.GetPillsFromXML(_pillsXML, period));
                 pivotItem.Content = pillListView;
                 AppPivot.Items.Add(pivotItem);
             }
@@ -55,7 +55,7 @@ namespace My_Pills
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();
-            List<Pill> periodPills = Data.DataHelper.GetPillsFromXML(_pillsXML, periodName);
+            List<Classes.Pill> periodPills = Classes.DataHelper.GetPillsFromXML(_pillsXML, periodName);
             this.Frame.Navigate(typeof(EditPeriodPage), periodName);
         }
     }
