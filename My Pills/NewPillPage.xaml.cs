@@ -1,5 +1,4 @@
 ﻿using My_Pills.Common;
-using My_Pills.Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -25,13 +23,12 @@ namespace My_Pills
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class EditPeriodPage : Page
+    public sealed partial class NewPillPage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private List<Pill> _pills;
 
-        public EditPeriodPage()
+        public NewPillPage()
         {
             this.InitializeComponent();
 
@@ -40,7 +37,6 @@ namespace My_Pills
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
-        
         /// <summary>
         /// Получает объект <see cref="NavigationHelper"/>, связанный с данным объектом <see cref="Page"/>.
         /// </summary>
@@ -71,13 +67,6 @@ namespace My_Pills
         /// сеанса.  Это состояние будет равно NULL при первом посещении страницы.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            EditPeriodPage_NavigationParameter param = e.NavigationParameter as EditPeriodPage_NavigationParameter;
-            if (param != null)
-            {
-                PageTitleTextBox.Text = param.periodName;
-                _pills = param.pills;
-                PillsListView.ItemsSource = _pills;
-            }
         }
 
         /// <summary>
@@ -89,7 +78,7 @@ namespace My_Pills
         /// <param name="e">Данные события, которые предоставляют пустой словарь для заполнения
         /// сериализуемым состоянием.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {            
+        {
         }
 
         #region Регистрация NavigationHelper
@@ -114,14 +103,9 @@ namespace My_Pills
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);            
+            this.navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(NewPillPage));
-        }
     }
 }
