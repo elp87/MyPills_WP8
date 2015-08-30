@@ -10,7 +10,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton x:Name="OkAppButton" Label="Добавить" Icon="Accept" />
+            <AppBarButton x:Name="OkAppButton" Label="Добавить" Icon="Accept" Click="OkAppButton_Click" />
             <AppBarButton x:Name="CancelAppButton" Label="Отмена" Icon="Cancel" />
         </CommandBar>
     </Page.BottomAppBar>

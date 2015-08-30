@@ -30,11 +30,11 @@ namespace My_Pills
 
         public NewPillPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            navigationHelper = new NavigationHelper(this);
+            navigationHelper.LoadState += NavigationHelper_LoadState;
+            navigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace My_Pills
         /// </summary>
         public NavigationHelper NavigationHelper
         {
-            get { return this.navigationHelper; }
+            get { return navigationHelper; }
         }
 
         /// <summary>
@@ -51,8 +51,11 @@ namespace My_Pills
         /// </summary>
         public ObservableDictionary DefaultViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return defaultViewModel; }
         }
+        
+
+        public static Classes.Pill Pill { get; set; }
 
         /// <summary>
         /// Заполняет страницу содержимым, передаваемым в процессе навигации.  Также предоставляется любое сохраненное состояние
@@ -98,14 +101,20 @@ namespace My_Pills
         /// событий, которые не могут отменить запрос навигации.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
+
+        private void OkAppButton_Click(object sender, RoutedEventArgs e)
+        {
+            Pill = new Classes.Pill(NameTextBox.Text, InfoTextBox.Text);
+            navigationHelper.GoBack();
+        }
     }
 }

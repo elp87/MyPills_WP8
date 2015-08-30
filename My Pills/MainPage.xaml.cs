@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using My_Pills.Classes;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -13,11 +14,11 @@ namespace My_Pills
     public sealed partial class MainPage : Page
     {
         private Windows.System.Display.DisplayRequest _keepScreenOnRequest = null;
-        private XElement _pillsXML = null;
+        private XElement _pillsXML = null;        
 
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             NavigationCacheMode = NavigationCacheMode.Required;
             PreventLock();
@@ -30,6 +31,11 @@ namespace My_Pills
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+
+            if (await XmlFile.IsExists() == false)
+            {
+                await XmlFile.Save(XmlFile.Default);
+            }
 
             Uri dataUri = new Uri("ms-appx:///Data/pills.xml");
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
