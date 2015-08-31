@@ -1,22 +1,12 @@
-﻿using My_Pills.Common;
-using My_Pills.Classes;
+﻿using My_Pills.Classes;
+using My_Pills.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
 // Документацию по шаблону элемента "Основная страница" см. по адресу http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -40,7 +30,7 @@ namespace My_Pills
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
-        
+
         /// <summary>
         /// Получает объект <see cref="NavigationHelper"/>, связанный с данным объектом <see cref="Page"/>.
         /// </summary>
@@ -86,7 +76,7 @@ namespace My_Pills
                 if (_pills == null) _pills = new List<Pill>();
                 _pills.Add(newPill);
             }
-            
+
         }
 
         /// <summary>
@@ -98,7 +88,7 @@ namespace My_Pills
         /// <param name="e">Данные события, которые предоставляют пустой словарь для заполнения
         /// сериализуемым состоянием.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {            
+        {
         }
 
         #region Регистрация NavigationHelper
@@ -123,7 +113,7 @@ namespace My_Pills
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);            
+            this.navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
@@ -131,6 +121,24 @@ namespace My_Pills
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(NewPillPage));
+        }
+
+        private async void OkAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string text = await XmlFile.Read();
+            XElement xml = XElement.Parse(text, LoadOptions.None);
+            XElement currentNode = xml.Elements("time").Where(el => el.Attribute("name").Value == PageTitleTextBox.Text).FirstOrDefault();
+            currentNode.RemoveNodes();
+
+            foreach (var pill in _pills)
+            {
+                currentNode.Add(new XElement("item", new object[] { 
+                    new XElement("name", pill.Name),
+                    pill.Info != "" ? new XElement("info", pill.Info) : null
+                }));
+            }
+            await XmlFile.Save(xml);
+            navigationHelper.GoBack();
         }
     }
 }

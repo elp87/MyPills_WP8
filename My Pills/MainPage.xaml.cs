@@ -29,22 +29,24 @@ namespace My_Pills
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+            
             bool fileExists = await XmlFile.IsExists();
             if (!fileExists)
             {
                 await XmlFile.Save(XmlFile.Default);
             }
-            
-            string text = await XmlFile.Read(); 
+            AppPivot.Items.Clear();
 
+            string text = await XmlFile.Read(); 
             _pillsXML = XElement.Parse(text, LoadOptions.None);
+            
             IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
                 PillsListView pillListView = new PillsListView(Classes.DataHelper.GetPillsFromXML(_pillsXML, period));
                 pivotItem.Content = pillListView;
-                AppPivot.Items.Add(pivotItem);
+                AppPivot.Items.Add(pivotItem);                
             }
         }
 
