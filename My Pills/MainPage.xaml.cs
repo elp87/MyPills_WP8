@@ -24,35 +24,23 @@ namespace My_Pills
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
-            
             bool fileExists = await XmlFile.IsExists();
             if (!fileExists)
             {
                 await XmlFile.Save(XmlFile.Default);
             }
             AppPivot.Items.Clear();
-                        
+
             _pillsXML = await XmlFile.Read();
-            
+
             IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
                 PillsListView pillListView = new PillsListView(Classes.DataHelper.GetPillsFromXML(_pillsXML, period));
                 pivotItem.Content = pillListView;
-                AppPivot.Items.Add(pivotItem);                
+                AppPivot.Items.Add(pivotItem);
             }
-        }
-
-        private void PreventLock()
-        {
-            _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
-            _keepScreenOnRequest.RequestActive();
         }
 
         private void EditPeriodAppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -62,6 +50,12 @@ namespace My_Pills
             this.Frame.Navigate(typeof(EditPeriodPage), 
                                 new Classes.EditPeriodPage_NavigationParameter() { periodName = periodName, pills = periodPills }
                                 );
+        }
+
+        private void PreventLock()
+        {
+            _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
+            _keepScreenOnRequest.RequestActive();
         }
     }
 }
