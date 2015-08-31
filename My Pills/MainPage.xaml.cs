@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using My_Pills.Classes;
+using elp87.WPEx.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -31,8 +32,8 @@ namespace My_Pills
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
-
-            if (await XmlFile.IsExists() == false)
+            bool fileExists = await XmlFile.IsExists();
+            if (!fileExists)
             {
                 await XmlFile.Save(XmlFile.Default);
             }

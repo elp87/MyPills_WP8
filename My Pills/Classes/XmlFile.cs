@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
+using elp87.WPEx.Storage;
 
 namespace My_Pills.Classes
 {
@@ -30,15 +31,7 @@ namespace My_Pills.Classes
 
         public static async Task<bool> IsExists()
         {
-            try
-            {
-                StorageFile file = await _appFolder.GetFileAsync(_xmlFileName);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
+            return await _appFolder.IsFileExists(_xmlFileName);
         }
     }
 }
