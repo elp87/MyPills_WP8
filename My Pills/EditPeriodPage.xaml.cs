@@ -71,13 +71,6 @@ namespace My_Pills
         /// сеанса.  Это состояние будет равно NULL при первом посещении страницы.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            var lastPage = Frame.ForwardStack.LastOrDefault();
-            if (lastPage != null && lastPage.SourcePageType.Equals(typeof(NewPillPage)))
-            {
-                Pill newPill = NewPillPage.Pill;
-                PillsListView.Items.Add(newPill);
-            }
-           
             EditPeriodPage_NavigationParameter param = e.NavigationParameter as EditPeriodPage_NavigationParameter;
             if (param != null)
             {
@@ -85,6 +78,15 @@ namespace My_Pills
                 _pills = param.pills;
                 PillsListView.ItemsSource = _pills;
             }
+
+            var lastPage = Frame.ForwardStack.LastOrDefault();
+            if (lastPage != null && lastPage.SourcePageType.Equals(typeof(NewPillPage)))
+            {
+                Pill newPill = NewPillPage.Pill;
+                if (_pills == null) _pills = new List<Pill>();
+                _pills.Add(newPill);
+            }
+            
         }
 
         /// <summary>
