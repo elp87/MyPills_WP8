@@ -1,12 +1,9 @@
-﻿using System;
-using Windows.Storage;
+﻿using My_Pills.Classes;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Xml.Linq;
-using System.Linq;
-using System.Collections.Generic;
-using My_Pills.Classes;
-using elp87.WPEx.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -37,10 +34,8 @@ namespace My_Pills
             {
                 await XmlFile.Save(XmlFile.Default);
             }
-
-            Uri dataUri = new Uri("ms-appx:///Data/pills.xml");
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
-            string text = await FileIO.ReadTextAsync(file);
+            
+            string text = await XmlFile.Read(); 
 
             _pillsXML = XElement.Parse(text, LoadOptions.None);
             IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
@@ -59,7 +54,7 @@ namespace My_Pills
             _keepScreenOnRequest.RequestActive();
         }
 
-        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void EditPeriodAppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();
             List<Classes.Pill> periodPills = Classes.DataHelper.GetPillsFromXML(_pillsXML, periodName);

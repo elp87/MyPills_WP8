@@ -1,8 +1,8 @@
-﻿using System;
+﻿using elp87.WPEx.Storage;
+using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
-using elp87.WPEx.Storage;
 
 namespace My_Pills.Classes
 {
@@ -27,6 +27,13 @@ namespace My_Pills.Classes
         {
             StorageFile file = await _appFolder.CreateFileAsync(_xmlFileName, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(file, xml.ToString());
+        }
+
+        public static async Task<string> Read()
+        {
+            StorageFile file = await _appFolder.GetFileAsync(_xmlFileName);
+            string text = await FileIO.ReadTextAsync(file);
+            return text;
         }
 
         public static async Task<bool> IsExists()
