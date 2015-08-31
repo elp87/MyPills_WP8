@@ -29,11 +29,11 @@ namespace My_Pills.Classes
             await FileIO.WriteTextAsync(file, xml.ToString());
         }
 
-        public static async Task<string> Read()
+        public static async Task<XElement> Read()
         {
             StorageFile file = await _appFolder.GetFileAsync(_xmlFileName);
             string text = await FileIO.ReadTextAsync(file);
-            return text;
+            return XElement.Parse(text, LoadOptions.None);
         }
 
         public static async Task<bool> IsExists()

@@ -36,9 +36,8 @@ namespace My_Pills
                 await XmlFile.Save(XmlFile.Default);
             }
             AppPivot.Items.Clear();
-
-            string text = await XmlFile.Read(); 
-            _pillsXML = XElement.Parse(text, LoadOptions.None);
+                        
+            _pillsXML = await XmlFile.Read();
             
             IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
             foreach (string period in periods)

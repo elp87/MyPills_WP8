@@ -125,8 +125,7 @@ namespace My_Pills
 
         private async void OkAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            string text = await XmlFile.Read();
-            XElement xml = XElement.Parse(text, LoadOptions.None);
+            XElement xml = await XmlFile.Read();
             XElement currentNode = xml.Elements("time").Where(el => el.Attribute("name").Value == PageTitleTextBox.Text).FirstOrDefault();
             currentNode.RemoveNodes();
 
