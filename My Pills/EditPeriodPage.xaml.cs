@@ -2,6 +2,7 @@
 using My_Pills.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,7 +21,7 @@ namespace My_Pills
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private List<Pill> _pills;
+        private ObservableCollection<Pill> _pills;
 
         public EditPeriodPage()
         {
@@ -66,7 +67,7 @@ namespace My_Pills
             if (param != null)
             {
                 PageTitleTextBox.Text = param.periodName;
-                _pills = param.pills;
+                _pills = new ObservableCollection<Pill>(param.pills);
                 PillsListView.ItemsSource = _pills;
             }
 
@@ -74,7 +75,7 @@ namespace My_Pills
             if (lastPage != null && lastPage.SourcePageType.Equals(typeof(NewPillPage)))
             {
                 Pill newPill = NewPillPage.Pill;
-                if (_pills == null) _pills = new List<Pill>();
+                if (_pills == null) _pills = new ObservableCollection<Pill>();
                 _pills.Add(newPill);
             }
 
@@ -148,5 +149,17 @@ namespace My_Pills
 
             flyoutBase.ShowAt(senderElement);
         }
+
+        private void DeleteFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            Pill selectedPill = (e.OriginalSource as FrameworkElement).DataContext as Pill;
+            if (selectedPill != null)
+            {
+                _pills.Remove(selectedPill);
+            }
+            PillsListView.ItemsSource = _pills;
+        }
+
+        
     }
 }

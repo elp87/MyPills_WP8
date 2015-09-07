@@ -35,9 +35,9 @@
                                     <MenuFlyoutItem x:Name="EditButton"
                                                             Text="Править"
                                                             />
-                                    <MenuFlyoutItem x:Name="DeleteButton"
+                                    <MenuFlyoutItem x:Name="DeleteFlyoutItem"
                                                             Text="Удалить"
-                                                            />
+                                                            Click="DeleteFlyoutItem_Click"/>
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
                             <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding Name}" Margin="0,10, 0, 0"/>
