@@ -29,9 +29,21 @@
             <ListView x:Name="PillsListView" ItemsSource="{Binding}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <Grid Holding="Grid_Holding">
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Name="EditButton"
+                                                            Text="Править"
+                                                            />
+                                    <MenuFlyoutItem x:Name="DeleteButton"
+                                                            Text="Удалить"
+                                                            />
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
                             <TextBlock FontFamily="Global User Interface" FontSize="36" Text="{Binding Name}" Margin="0,10, 0, 0"/>
-                        </StackPanel>
+                            
+                        </Grid>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
