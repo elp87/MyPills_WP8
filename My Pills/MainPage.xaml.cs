@@ -27,7 +27,7 @@ namespace My_Pills
             bool fileExists = await XmlFile.IsExists();
             if (!fileExists)
             {
-                await XmlFile.Save(XmlFile.Default);
+                await XmlFile.SaveAsync(XmlFile.Default);
             }
             AppPivot.Items.Clear();
 

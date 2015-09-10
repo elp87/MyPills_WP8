@@ -15,15 +15,22 @@ namespace My_Pills.Classes
         {
             get
             {
-                XElement xFile = new XElement("pills",                     
-                    new XElement("time", new XAttribute("name", "Утро"))
-                );
+                XElement xFile = new XElement("pills", new object[] {
+                    new XElement("time", new XAttribute("name", "Утро")),
+                    new XElement("time", new XAttribute("name", "День")),
+                    new XElement("time", new XAttribute("name", "Вечер"))
+                });
 
                 return xFile;
             }
         }
 
-        public static async Task Save(XElement xml)
+        public static async void Save(XElement xml)
+        {
+            await SaveAsync(xml);
+        }
+
+        public static async Task SaveAsync(XElement xml)
         {
             StorageFile file = await _appFolder.CreateFileAsync(_xmlFileName, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(file, xml.ToString());

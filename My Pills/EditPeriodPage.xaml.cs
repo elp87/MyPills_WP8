@@ -138,7 +138,7 @@ namespace My_Pills
                     pill.Info != "" ? new XElement("info", pill.Info) : null
                 }));
             }
-            await XmlFile.Save(xml);
+            XmlFile.Save(xml);
             navigationHelper.GoBack();
         }
 
