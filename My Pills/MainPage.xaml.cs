@@ -12,7 +12,8 @@ namespace My_Pills
     public sealed partial class MainPage : Page
     {
         private Windows.System.Display.DisplayRequest _keepScreenOnRequest = null;
-        private XElement _pillsXML = null;        
+        private XElement _pillsXML = null;
+        private string _activePivotHeader = "";
 
         public MainPage()
         {
@@ -40,6 +41,25 @@ namespace My_Pills
                 PillsListView pillListView = new PillsListView(Classes.DataHelper.GetPillsFromXML(_pillsXML, period));
                 pivotItem.Content = pillListView;
                 AppPivot.Items.Add(pivotItem);
+            }
+
+            if (_activePivotHeader != "")
+            {
+                AppPivot.SelectedItem = AppPivot.Items.FirstOrDefault(item =>
+                {
+                    PivotItem pivotItem = item as PivotItem;
+                    if (pivotItem.Header.ToString() == _activePivotHeader) return true;
+                    else return false;
+                });
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            PivotItem selectedItem = this.AppPivot.SelectedItem as PivotItem;
+            if (selectedItem != null){
+                _activePivotHeader = selectedItem.Header.ToString();
             }
         }
 
