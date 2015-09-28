@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using My_Pills.Classes;
@@ -11,7 +13,7 @@ namespace My_Pills
     /// <summary>
     ///     Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class SettingPage : Page
+    public sealed partial class SettingPage
     {
         private readonly NavigationHelper _navigationHelper;
         private ObservableCollection<string> _periodCollection;
@@ -26,6 +28,7 @@ namespace My_Pills
             _navigationHelper.LoadState += NavigationHelper_LoadState;
         }
 
+        #region Регистрация NavigationHelper
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             var param = e.NavigationParameter as SettingPageNavigationParameter;
@@ -45,6 +48,18 @@ namespace My_Pills
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedFrom(e);
+        }
+        #endregion
+
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddPeriodContentDialog dialog = new AddPeriodContentDialog();
+            var dialogResult = await dialog.ShowAsync();
+            if (dialogResult == ContentDialogResult.Primary)
+            {
+                string periodName = dialog.PeriodName;
+                _periodCollection.Add(periodName);
+            }
         }
     }
 }

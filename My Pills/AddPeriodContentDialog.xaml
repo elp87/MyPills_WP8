@@ -1,0 +1,17 @@
+﻿<ContentDialog
+    x:Class="My_Pills.AddPeriodContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Добавить период"
+    PrimaryButtonText="Ок"  
+    SecondaryButtonText="Отмена"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TextBox x:Name="PeriodNameTextBox" Header="Введите название периода"/>
+    </StackPanel>
+</ContentDialog>
