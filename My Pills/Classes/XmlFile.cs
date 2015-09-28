@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Linq;
 using Windows.Storage;
 
 namespace My_Pills.Classes
@@ -51,6 +52,12 @@ namespace My_Pills.Classes
         public static void AddPeriod(XElement xml, string periodName)
         {
             xml.Add(new XElement("time", new XAttribute("name", periodName)));
+        }
+
+        public static void RemovePeriod(XElement xml, string periodName)
+        {
+            XElement period = xml.Descendants("time").First(s => s.Attribute("name").Value == periodName);
+            period.Remove();
         }
     }
 }

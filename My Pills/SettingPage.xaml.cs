@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using My_Pills.Classes;
 using My_Pills.Common;
@@ -73,6 +75,25 @@ namespace My_Pills
                 XmlFile.Save(_xml);
                 Frame.GoBack();
             }
+        }
+
+        private void ListViewItemGrid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private void DeleteFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedPeriod = ((FrameworkElement) e.OriginalSource).DataContext as string;
+            if (selectedPeriod != null)
+            {
+                _periodCollection.Remove(selectedPeriod);
+                XmlFile.RemovePeriod(_xml, selectedPeriod);
+            }
+            
         }
     }
 }

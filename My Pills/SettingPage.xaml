@@ -29,7 +29,17 @@
             <ListView x:Name="PeriodsListView" ItemsSource="{Binding}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Holding="ListViewItemGrid_Holding">
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Name="EditButton"
+                                                            Text="Править"
+                                                            />
+                                    <MenuFlyoutItem x:Name="DeleteFlyoutItem"
+                                                            Text="Удалить"
+                                                            Click="DeleteFlyoutItem_Click"/>
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
                             <TextBlock Text="{Binding}" FontFamily="Global User Interface" FontSize="36" Margin="10,10, 0, 0"/>
                         </Grid>
                     </DataTemplate>
