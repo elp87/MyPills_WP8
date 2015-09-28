@@ -73,15 +73,17 @@ namespace My_Pills
                                 );
         }
 
+        private void PeriodOptionsAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SettingPage),
+                                new SettingPageNavigationParameter() { PillsXml = _pillsXML }
+                                );
+        }
+
         private void PreventLock()
         {
             _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             _keepScreenOnRequest.RequestActive();
-        }
-
-        private void PeriodOptionsAppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(PeriodOptionsPage), null);
         }
     }
 }

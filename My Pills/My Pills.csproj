@@ -83,6 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\EditPeriodPage_NavigationParameter.cs" />
+    <Compile Include="Classes\SettingPageNavigationParameter.cs" />
     <Compile Include="Classes\XmlFile.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
@@ -99,13 +100,13 @@
     <Compile Include="NewPillPage.xaml.cs">
       <DependentUpon>NewPillPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PeriodOptionsPage.xaml.cs">
-      <DependentUpon>PeriodOptionsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PillsListView.xaml.cs">
       <DependentUpon>PillsListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -146,11 +147,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PeriodOptionsPage.xaml">
+    <Page Include="PillsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PillsListView.xaml">
+    <Page Include="SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

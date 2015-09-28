@@ -17,5 +17,10 @@ namespace My_Pills.Classes
                                         )
                                     .ToList();
         }
+
+        public static List<string> GetPeriodsFromXml(XElement xml)
+        {
+            return xml.Descendants("time").Select(s => s.Attribute("name").Value).ToList();
+        }
     }
 }
