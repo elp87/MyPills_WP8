@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -76,6 +77,11 @@ namespace My_Pills
         {
             _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             _keepScreenOnRequest.RequestActive();
+        }
+
+        private void PeriodOptionsAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PeriodOptionsPage), null);
         }
     }
 }
