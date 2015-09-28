@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -17,6 +18,7 @@ namespace My_Pills
     {
         private readonly NavigationHelper _navigationHelper;
         private ObservableCollection<string> _periodCollection;
+        private XElement _xml;
 
         public SettingPage()
         {
@@ -34,8 +36,8 @@ namespace My_Pills
             var param = e.NavigationParameter as SettingPageNavigationParameter;
             if (param != null)
             {
-                var xml = param.PillsXml;
-                _periodCollection = new ObservableCollection<string>(DataHelper.GetPeriodsFromXml(xml));
+                _xml = param.PillsXml;
+                _periodCollection = new ObservableCollection<string>(DataHelper.GetPeriodsFromXml(_xml));
                 PeriodsListView.ItemsSource = _periodCollection;
             }
         }
@@ -59,6 +61,17 @@ namespace My_Pills
             {
                 string periodName = dialog.PeriodName;
                 _periodCollection.Add(periodName);
+
+                XmlFile.AddPeriod(_xml, periodName);
+            }
+        }
+
+        private void OkAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_xml != null)
+            {
+                XmlFile.Save(_xml);
+                Frame.GoBack();
             }
         }
     }

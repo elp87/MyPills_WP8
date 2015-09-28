@@ -47,5 +47,10 @@ namespace My_Pills.Classes
         {
             return await _appFolder.IsFileExists(_xmlFileName);
         }
+
+        public static void AddPeriod(XElement xml, string periodName)
+        {
+            xml.Add(new XElement("time", new XAttribute("name", periodName)));
+        }
     }
 }
