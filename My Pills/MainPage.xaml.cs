@@ -31,7 +31,7 @@ namespace My_Pills
             {
                 await XmlFile.SaveAsync(XmlFile.Default);
             }
-            AppPivot.Items.Clear();
+            ClearAppPivot();
 
             _pillsXML = await XmlFile.Read();
 
@@ -53,6 +53,27 @@ namespace My_Pills
                     else return false;
                 });
             }
+        }
+
+        private void ClearAppPivot()
+        {
+            if (AppPivot.Items == null) return;
+            AppPivot.Items.Clear();
+
+            PivotItem basePivotItem = new PivotItem() {Header = "Основное"};
+            Grid bpiGrid = new Grid();
+            Button optionsButton = new Button()
+            {
+                Margin = new Thickness(10, 10,10,0), 
+                Content = "Настройки", 
+                VerticalAlignment = VerticalAlignment.Top, 
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+
+            bpiGrid.Children.Add(optionsButton);
+            basePivotItem.Content = bpiGrid;
+            AppPivot.Items.Add(basePivotItem);
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
