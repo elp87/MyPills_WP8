@@ -10,10 +10,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace My_Pills
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
-        private Windows.System.Display.DisplayRequest _keepScreenOnRequest = null;
-        private XElement _pillsXML = null;
+        private Windows.System.Display.DisplayRequest _keepScreenOnRequest;
+        private XElement _pillsXml;
         private string _activePivotHeader = "";
 
         public MainPage()
@@ -33,15 +33,15 @@ namespace My_Pills
             }
             ClearAppPivot();
 
-            _pillsXML = await XmlFile.Read();
+            _pillsXml = await XmlFile.Read();
 
-            IEnumerable<string> periods = _pillsXML.Descendants("time").Select(x => x.Attribute("name").Value);
+            IEnumerable<string> periods = _pillsXml.Descendants("time").Select(x => x.Attribute("name").Value);
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
-                PillsListView pillListView = new PillsListView(Classes.DataHelper.GetPillsFromXML(_pillsXML, period));
+                PillsListView pillListView = new PillsListView(DataHelper.GetPillsFromXML(_pillsXml, period));
                 pivotItem.Content = pillListView;
-                AppPivot.Items.Add(pivotItem);
+                if (AppPivot.Items != null) AppPivot.Items.Add(pivotItem);
             }
 
             if (_activePivotHeader != "")
@@ -49,8 +49,7 @@ namespace My_Pills
                 AppPivot.SelectedItem = AppPivot.Items.FirstOrDefault(item =>
                 {
                     PivotItem pivotItem = item as PivotItem;
-                    if (pivotItem.Header.ToString() == _activePivotHeader) return true;
-                    else return false;
+                    return (pivotItem != null && pivotItem.Header.ToString() == _activePivotHeader); // Выбираем PivotItem, у которого Header = _activePivotHeader
                 });
             }
         }
@@ -80,13 +79,14 @@ namespace My_Pills
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            PivotItem selectedItem = this.AppPivot.SelectedItem as PivotItem;
-            if (selectedItem != null){
+            PivotItem selectedItem = AppPivot.SelectedItem as PivotItem;
+            if (selectedItem != null)
+            {
                 _activePivotHeader = selectedItem.Header.ToString();
             }
         }
 
-        private void EditPeriodAppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void EditPeriodAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             PivotItem selectedItem = (PivotItem) AppPivot.SelectedItem;
             if (AppPivot.Items != null)
@@ -95,17 +95,17 @@ namespace My_Pills
                 if (selectedItem == baseItem) return;
             }
             string periodName = selectedItem.Header.ToString();
-            List<Classes.Pill> periodPills = Classes.DataHelper.GetPillsFromXML(_pillsXML, periodName);
-            this.Frame.Navigate(typeof (EditPeriodPage),
-                new Classes.EditPeriodPage_NavigationParameter() {periodName = periodName, pills = periodPills}
-                );
+            List<Pill> periodPills = DataHelper.GetPillsFromXML(_pillsXml, periodName);
+            Frame.Navigate(typeof (EditPeriodPage),
+                           new EditPeriodPage_NavigationParameter() {periodName = periodName, pills = periodPills}
+                           );
         }
 
         private void optionsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SettingPage),
-                                new SettingPageNavigationParameter() { PillsXml = _pillsXML }
-                                );
+            Frame.Navigate(typeof(SettingPage),
+                           new SettingPageNavigationParameter() { PillsXml = _pillsXml }
+                           );
         }
 
         private void PreventLock()
