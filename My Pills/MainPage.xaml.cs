@@ -35,13 +35,19 @@ namespace My_Pills
 
             _pillsXml = await XmlFile.Read();
 
-            IEnumerable<string> periods = _pillsXml.Descendants("time").Select(x => x.Attribute("name").Value);
+            List<string> periods = _pillsXml.Descendants("time").Select(x => x.Attribute("name").Value).ToList();
             foreach (string period in periods)
             {
                 PivotItem pivotItem = new PivotItem() { Header = period };
                 PillsListView pillListView = new PillsListView(DataHelper.GetPillsFromXML(_pillsXml, period));
                 pivotItem.Content = pillListView;
                 if (AppPivot.Items != null) AppPivot.Items.Add(pivotItem);
+            }
+
+            // Запускаем приложение с первого периода
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                _activePivotHeader = periods.First();
             }
 
             if (_activePivotHeader != "")
