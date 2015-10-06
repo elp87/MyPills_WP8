@@ -69,6 +69,7 @@ namespace My_Pills
                 VerticalAlignment = VerticalAlignment.Top, 
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
+            optionsButton.Click += optionsButton_Click;
 
             bpiGrid.Children.Add(optionsButton);
             basePivotItem.Content = bpiGrid;
@@ -94,7 +95,7 @@ namespace My_Pills
                                 );
         }
 
-        private void PeriodOptionsAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void optionsButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(SettingPage),
                                 new SettingPageNavigationParameter() { PillsXml = _pillsXML }

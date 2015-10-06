@@ -9,7 +9,6 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Icon="Edit" Label="Править" Click="EditPeriodAppBarButton_Click" />
-            <AppBarButton Icon="Setting" Label="Настройки" Click="PeriodOptionsAppBarButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
