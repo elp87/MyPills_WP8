@@ -88,11 +88,17 @@ namespace My_Pills
 
         private void EditPeriodAppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            string periodName = ((PivotItem)AppPivot.SelectedItem).Header.ToString();
+            PivotItem selectedItem = (PivotItem) AppPivot.SelectedItem;
+            if (AppPivot.Items != null)
+            {
+                PivotItem baseItem = (PivotItem) AppPivot.Items[0];
+                if (selectedItem == baseItem) return;
+            }
+            string periodName = selectedItem.Header.ToString();
             List<Classes.Pill> periodPills = Classes.DataHelper.GetPillsFromXML(_pillsXML, periodName);
-            this.Frame.Navigate(typeof(EditPeriodPage), 
-                                new Classes.EditPeriodPage_NavigationParameter() { periodName = periodName, pills = periodPills }
-                                );
+            this.Frame.Navigate(typeof (EditPeriodPage),
+                new Classes.EditPeriodPage_NavigationParameter() {periodName = periodName, pills = periodPills}
+                );
         }
 
         private void optionsButton_Click(object sender, RoutedEventArgs e)
