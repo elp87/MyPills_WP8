@@ -113,5 +113,12 @@ namespace My_Pills
             _keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             _keepScreenOnRequest.RequestActive();
         }
+
+        private void AppPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (BottomAppBar == null || AppPivot.Items == null) return;
+            if (AppPivot.SelectedItem != AppPivot.Items[0]) BottomAppBar.Visibility = Visibility.Visible;
+            else BottomAppBar.Visibility = Visibility.Collapsed;
+        }
     }
 }

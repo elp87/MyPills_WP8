@@ -12,6 +12,6 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
-        <Pivot x:Name="AppPivot" Title="Мои таблетки"/>
+        <Pivot x:Name="AppPivot" Title="Мои таблетки" SelectionChanged="AppPivot_SelectionChanged"/>
     </Grid>
 </Page>
